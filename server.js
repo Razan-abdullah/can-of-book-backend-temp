@@ -15,7 +15,8 @@ server.use(cors()); //make my server open for any request
 const PORT = process.env.PORT || 3100;
 
 // mongoose config
-mongoose.connect('mongodb://localhost:27017/book_stor', {useNewUrlParser: true, useUnifiedTopology: true}); // 1 - connect mongoose with DB (301d35-cats)
+// mongoose.connect('mongodb://localhost:27017/book_stor', {useNewUrlParser: true, useUnifiedTopology: true}); // 1 - connect mongoose with DB (301d35-cats)
+mongoose.connect('mongodb://razan:1234@cluster0-shard-00-00.pl8mj.mongodb.net:27017,cluster0-shard-00-01.pl8mj.mongodb.net:27017,cluster0-shard-00-02.pl8mj.mongodb.net:27017/?ssl=true&replicaSet=atlas-1lgzyk-shard-0&authSource=admin&retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true}); // 1 - connect mongoose with DB (301d35-cats)
 
 const kittySchema = new mongoose.Schema({ //define the schema (structure)
     title: String,
@@ -53,17 +54,68 @@ async function seedData(){
 // seedData(); //call seedData function
 
 
-//Routes 
-server.get('/',homeHandler);
+// //Routes 
+// server.get('/',homeHandler);
+// server.get('/getbooks',getbooksHandler);
+// server.post('/addBook', addBookHandler);
+// server.post('/ad123', addBookHandler);
 
-server.get('/getbooks',getbooksHandler);
-server.get('*',defualtHandler);
+// server.delete('/deletebook/:id',deletebookHandler);
+// server.put('/update/:id',updatebookHandler);
+// server.get('*',defualtHandler);
+
+//////////////////////
+
+async function addBookHandler(req,res) {
+    console.log(req.body);
+    
+    const {title,des,status} = req.body; //Destructuring assignment
+    await KittenModel.create({
+        title : title,
+        des : des,
+        status:status
+    });
+
+    KittenModel.find({},(err,result)=>{
+        if(err)
+        {
+            console.log(err);
+        }
+        else
+        {
+            // console.log(result);
+            // res.send(result);
+            res.send("hifrom add rout ")
+
+        }
+    })
+}
+function updatebookHandler(req,res){
+    const id = req.params.id;
+    const {title,des,status} = req.body; //Destructuring assignment
+    console.log(req.body);
+    KittenModel.findByIdAndUpdate(id,{title,des,status},(err,result)=>{
+        if(err) {
+            console.log(err);
+        }
+        else {
+            KittenModel.find({},(err,result)=>{
+                if(err)
+                {
+                    console.log(err);
+                }
+                else
+                {
+                    // console.log(result);
+                    // res.send(result);
+                    res.send("hifrom update rout ")
+                }
+            })
+        }
+    })}
 
 
-
-
-
-// http://localhost:3010/*
+// http://localhost:3100/*
 function defualtHandler(req,res) {
     res.status(404).send("Sorry, Page not found");
 }
@@ -85,11 +137,31 @@ function getbooksHandler(req,res) {
         else
         {
             console.log(result);
-            res.send(result);
+             res.send(result);
+            
+
         }
     })
 }
+function deletebookHandler(req,res) {
+    const bookId = req.params.id;
+    KittenModel.deleteOne({_id:bookId},(err,result)=>{
+        
+        KittenModel.find({},(err,result)=>{
+            if(err)
+            {
+                console.log(err);
+            }
+            else
+            {
+                // console.log(result);
+                // res.send(result);
+                res.send("hifrom delet rout ")
 
+            }
+        })
+
+    })}
 server.listen(PORT,()=>{
     console.log(`Listening on ${PORT}`);
 })

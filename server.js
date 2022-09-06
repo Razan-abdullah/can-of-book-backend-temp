@@ -15,7 +15,7 @@ server.use(cors()); //make my server open for any request
 const PORT = process.env.PORT || 3100;
 
 // mongoose config
-mongoose.connect('mongodb://localhost:27017/books', {useNewUrlParser: true, useUnifiedTopology: true}); // 1 - connect mongoose with DB (301d35-cats)
+mongoose.connect('mongodb://localhost:27017/book_stor', {useNewUrlParser: true, useUnifiedTopology: true}); // 1 - connect mongoose with DB (301d35-cats)
 
 const kittySchema = new mongoose.Schema({ //define the schema (structure)
     title: String,

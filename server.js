@@ -51,18 +51,18 @@ async function seedData(){
     await thirdbook.save();
 }
 
-// seedData(); //call seedData function
+seedData(); //call seedData function
 
 
-// //Routes 
-// server.get('/',homeHandler);
-// server.get('/getbooks',getbooksHandler);
-// server.post('/addBook', addBookHandler);
-// server.post('/ad123', addBookHandler);
+//Routes 
+server.get('/',homeHandler);
+server.get('/getbooks',getbooksHandler);
+server.post('/addBook', addBookHandler);
+server.post('/ad123', addBookHandler);
 
-// server.delete('/deletebook/:id',deletebookHandler);
-// server.put('/update/:id',updatebookHandler);
-// server.get('*',defualtHandler);
+server.delete('/deletebook/:id',deletebookHandler);
+server.put('/update/:id',updatebookHandler);
+server.get('*',defualtHandler);
 
 //////////////////////
 

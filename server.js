@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const { response } = require("express");
 require("dotenv").config();
-const mongoose = require("mongoose"); // 1- import mongoose
+const mongoose = require("mongoose"); // 1-- import mongoose
 
 const server = express();
 server.use(express.json());

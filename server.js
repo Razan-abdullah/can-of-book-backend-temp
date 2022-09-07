@@ -18,8 +18,7 @@ const PORT = process.env.PORT || 3100;
 // mongoose config
 // mongoose.connect("mongodb://localhost:27017/book_stor", {
 //   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// }); // 1 - connect mongoose with DB (301d35-cats)
+//   useUnifiedTopology: true,}); // 1 - connect mongoose with DB (301d35-cats)
 mongoose.connect('mongodb://razan:1234@cluster0-shard-00-00.pl8mj.mongodb.net:27017,cluster0-shard-00-01.pl8mj.mongodb.net:27017,cluster0-shard-00-02.pl8mj.mongodb.net:27017/?ssl=true&replicaSet=atlas-1lgzyk-shard-0&authSource=admin&retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true}); // 1 - connect mongoose with DB (301d35-cats)
 
 const kittySchema = new mongoose.Schema({
